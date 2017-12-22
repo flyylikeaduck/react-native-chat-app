@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import {send, subscribe} from 'react-native-training-chat-server';
+import ReversedFlatList from 'react-native-reversed-flat-list';
 
 const NAME = 'Becca';
 const CHANNEL = 'Reactivate';
@@ -44,7 +45,7 @@ export default class App extends React.Component {
 
     return (
       <View style={styles.container}>
-        <FlatList data={messages} renderItem={this.renderItem} />
+        <ReversedFlatList data={messages} renderItem={this.renderItem} />
 
         <KeyboardAvoidingView style={styles.footer} behavior='padding'>
           <TextInput

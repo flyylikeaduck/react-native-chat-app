@@ -22,6 +22,7 @@
     "expo": "^23.0.4",
     "react": "16.0.0",
     "react-native": "0.50.3",
+    "react-native-reversed-flat-list": "^1.0.2",
     "react-native-training-chat-server": "^1.1.2"
   }
 }
