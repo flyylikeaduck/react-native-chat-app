@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, TextInput, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import {send, subscribe} from 'react-native-training-chat-server';
 
 const NAME = 'Becca';
@@ -26,6 +26,19 @@ export default class App extends React.Component {
     );
   }
 
+  async sendMessage() {
+
+    await send({
+      channel: CHANNEL,
+      sender: NAME,
+      message: this.state.typing
+    });
+
+    this.setState({
+      typing: ''
+    });
+  }
+
   render() {
     const {messages, typing} = this.state;
 
@@ -41,6 +54,9 @@ export default class App extends React.Component {
             underlineColorAndroid='transparent'
             placeholder='Add your comment'
           />
+          <TouchableOpacity onPress={this.sendMessage.bind(this)}>
+            <Text style={styles.send}>Send</Text>
+          </TouchableOpacity>
         </KeyboardAvoidingView>
       </View>
     );
@@ -77,5 +93,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     fontSize: 18,
     flex: 1,
-  }
+  },
+  send: {
+    alignSelf: 'center',
+    color: '#255436',
+    fontSize: 16,
+    fontWeight: 'bold',
+    padding: 20,
+  },
 });
