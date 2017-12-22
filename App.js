@@ -1,12 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TextInput, KeyboardAvoidingView } from 'react-native';
 import {send, subscribe} from 'react-native-training-chat-server';
 
 const NAME = 'Becca';
 const CHANNEL = 'Reactivate';
 
 export default class App extends React.Component {
-  state = {messages: []};
+  state = {
+    messages: [],
+    typing: '',
+  };
 
   componentDidMount() {
     subscribe(CHANNEL, messages => {
@@ -24,11 +27,21 @@ export default class App extends React.Component {
   }
 
   render() {
-    const {messages} = this.state;
+    const {messages, typing} = this.state;
 
     return (
       <View style={styles.container}>
-         <FlatList data={messages} renderItem={this.renderItem} />
+        <FlatList data={messages} renderItem={this.renderItem} />
+
+        <KeyboardAvoidingView style={styles.footer} behavior='padding'>
+          <TextInput
+            value={typing}
+            onChangeText={text => this.setState({typing: text})}
+            style={styles.input}
+            underlineColorAndroid='transparent'
+            placeholder='Add your comment'
+          />
+        </KeyboardAvoidingView>
       </View>
     );
   }
@@ -55,4 +68,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#6F7919',
   },
+  footer: {
+    backgroundColor: '#eee',
+    flexDirection: 'row',
+  },
+  input: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    fontSize: 18,
+    flex: 1,
+  }
 });
